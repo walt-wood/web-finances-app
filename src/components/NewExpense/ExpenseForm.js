@@ -1,7 +1,7 @@
 import "./ExpenseForm.css";
 import { useState } from "react";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // Multiple state slice approach
   // target.value is always a string so send useState empty string.
   const [enteredTitle, setEnteredTitle] = useState("");
@@ -57,13 +57,35 @@ const ExpenseForm = () => {
     // });
   };
 
+  const submitHandler = (event) => {
+    // Prevents default behavior of browser sending form info to hosting server.
+    event.preventDefault();
+
+    // gather data into new object
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
+    };
+
+    // Sending data to NewExpense.js
+    props.onSaveExpenseData(expenseData);
+    // By adding value prop to html <input>'s below, we can reset the displayed data by calling these functions with
+    // an empty string as the argument.
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+  };
+
   return (
-    <form onSubmit={}>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
           <input
             type="text"
+            required
+            value={enteredTitle}
             onChange={titleChangeHandler}
             min="0.01"
             step="0.01"
@@ -73,6 +95,8 @@ const ExpenseForm = () => {
           <label>Amount</label>
           <input
             type="number"
+            required
+            value={enteredAmount}
             onChange={amountChangeHandler}
             min="0.01"
             step="0.01"
@@ -82,6 +106,8 @@ const ExpenseForm = () => {
           <label>Date</label>
           <input
             type="date"
+            required
+            value={enteredDate}
             onChange={dateChangeHandler}
             min="2019-01-01"
             max="2022-12-31"

@@ -24,9 +24,17 @@ const App = () => {
       date: new Date(2021, 5, 12),
     },
   ];
+
+  const addExpenseHandler = (expense) => {
+    console.log("App expense");
+    console.log(expense);
+  };
+
+  // To send data from a child component to a sibling component we must send data to root component (App in this case)
+  // then down to the sibling. This concept is called Lifting the State Up
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
     </div>
   );
