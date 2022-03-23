@@ -7,10 +7,10 @@ const NewExpense = (props) => {
     const expenseData = {
       ...enteredExpenseData,
       // this approach could produce duplicate keys..
-      id: Math.random().toString(),
+      id: crypto.randomUUID(),
     };
+    console.log(expenseData);
     // Send data upwards to App.js
-    props.onAddExpense(expenseData);
   };
 
   // onSaveExpenseData is a user made prop used to transfer data backwards up the component tree.
