@@ -8,7 +8,7 @@ const NewExpense = (props) => {
     // Copying data from ExpenseForm and adding a key
     const expenseData = {
       ...enteredExpenseData,
-      // this approach could produce duplicate keys..
+      // this is built in unique id generator
       id: crypto.randomUUID(),
     };
     props.onAddExpense(expenseData);
@@ -30,7 +30,12 @@ const NewExpense = (props) => {
       {!isEditing && (
         <button onClick={startEditingHandler}>Add New Expense</button>
       )}
-      {isEditing && <ExpenseForm onCancel={stopEditingHandler} onSaveExpenseData={saveExpenseDataHandler} />}
+      {isEditing && (
+        <ExpenseForm
+          onCancel={stopEditingHandler}
+          onSaveExpenseData={saveExpenseDataHandler}
+        />
+      )}
     </div>
   );
 };
